@@ -1,0 +1,8 @@
+# Store text files with LF in the repo; check out native on each platform.
+* text=auto
+
+# Keep Windows-native line endings for the PowerShell installer.
+*.ps1 text eol=crlf
+
+# Binary assets (never normalize).
+*.png binary
