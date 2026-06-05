@@ -38,12 +38,13 @@
       text-align: right; z-index: 5; pointer-events: none;
     }
     #clock .time {
-      font-size: 36px; font-weight: 700; line-height: 1;
-      color: rgba(0, 255, 136, 0.5); letter-spacing: 0.04em;
+      font-size: 46px; font-weight: 700; line-height: 1;
+      color: rgba(0, 255, 136, 0.82); letter-spacing: 0.04em;
+      text-shadow: 0 0 18px rgba(0, 255, 136, 0.35);
     }
     #clock .date {
-      font-size: 10px; font-weight: 400; margin-top: 6px;
-      color: rgba(0, 255, 136, 0.25); letter-spacing: 0.18em;
+      font-size: 11px; font-weight: 400; margin-top: 7px;
+      color: rgba(0, 255, 136, 0.5); letter-spacing: 0.18em;
     }
 
     /* ---- hint (bottom-right, fades out) ---------------------------------- */
@@ -71,7 +72,7 @@
 <body>
   <div id="bg"></div>
   <div id="clock"></div>
-  <div id="hint">[C] config &middot; drag cards</div>
+  <div id="hint">click &#9881; (bottom-right) to configure &middot; drag headers &middot; resize from corner</div>
 
   <!-- ====================================================================
        Load order (per spec):
@@ -98,6 +99,20 @@
       var timeEl = document.createElement('div'); timeEl.className = 'time';
       var dateEl = document.createElement('div'); dateEl.className = 'date';
       clock.appendChild(timeEl); clock.appendChild(dateEl);
+
+      // pin the clock to the configured screen (multi-monitor stretch)
+      function placeClock() {
+        var r = (window.WallpaperLayout && window.WallpaperLayout.rect)
+          ? window.WallpaperLayout.rect()
+          : { x: 0, y: 0, w: window.innerWidth, h: window.innerHeight };
+        clock.style.left = r.x + 'px';
+        clock.style.top = (r.y + 18) + 'px';
+        clock.style.width = r.w + 'px';
+        clock.style.right = 'auto';
+        clock.style.paddingRight = '26px';
+      }
+      placeClock();
+      window.addEventListener('resize', placeClock);
 
       var DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
       var MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',

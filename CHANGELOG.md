@@ -29,5 +29,10 @@ All notable changes to this project are documented here. The format loosely foll
 - Notes card `proxy` mode: read/write the note through a server-side endpoint, so
   credentials stay off the client and browser CORS is avoided.
 - Optional, gitignored `src/config.local.js` for per-machine overrides.
+- Multi-monitor: `layout.uiRect` pins the dashboard (clock, cards, gear, panel) to one
+  screen when a single wallpaper is stretched across several monitors.
+- Wallpaper Engine usability: bigger/brighter clock, a more visible gear (WE blocks
+  keyboard input to wallpapers, so the panel opens by clicking the gear), higher card
+  max-width, and a visible resize grip.
 
 [Unreleased]: https://github.com/mhathegreat/homelab-wallpaper

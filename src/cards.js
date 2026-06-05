@@ -279,9 +279,18 @@
     pos[id] = { left: parseInt(root.style.left, 10) || 0, top: parseInt(root.style.top, 10) || 0 };
     try { localStorage.setItem(POS_KEY, JSON.stringify(pos)); } catch (e) {}
   }
+  function layoutRect() {
+    var r = W.CONFIG && W.CONFIG.layout && W.CONFIG.layout.uiRect;
+    if (!r) { return { x: 0, y: 0, w: window.innerWidth, h: window.innerHeight }; }
+    return { x: r.x * window.innerWidth, y: r.y * window.innerHeight,
+             w: r.w * window.innerWidth, h: r.h * window.innerHeight };
+  }
+  W.WallpaperLayout = { rect: layoutRect };
+
   function defaultPos(i) {
+    var b = layoutRect();
     var col = Math.floor(i / 4), row = i % 4;
-    return { left: 24 + col * 288, top: 24 + row * 190 };
+    return { left: Math.round(b.x) + 24 + col * 288, top: Math.round(b.y) + 24 + row * 190 };
   }
   function applyPosition(id, index, root) {
     var pos = loadPositions();
@@ -329,7 +338,7 @@
       border: '1px solid rgba(0,255,136,0.15)', borderRadius: '10px',
       backdropFilter: 'blur(16px)', webkitBackdropFilter: 'blur(16px)',
       padding: '10px 14px', fontFamily: "'JetBrains Mono', monospace",
-      minWidth: '160px', maxWidth: '300px', resize: 'both', overflow: 'hidden',
+      minWidth: '150px', maxWidth: '640px', resize: 'both', overflow: 'hidden',
       transition: 'border-color 0.2s', display: 'flex', flexDirection: 'column',
       color: '#00ff88'
     });
@@ -349,6 +358,14 @@
 
     var body = el('div', { display: 'flex', flexDirection: 'column', flex: '1 1 auto', minHeight: '0' });
     root.append(header, body);
+    // visible resize grip (the native resize handle still does the work underneath)
+    root.appendChild(el('div', {
+      position: 'absolute', right: '2px', bottom: '2px', width: '11px', height: '11px',
+      pointerEvents: 'none',
+      background: 'linear-gradient(135deg, transparent 44%, rgba(0,255,136,0.5) 44%, ' +
+                 'rgba(0,255,136,0.5) 58%, transparent 58%, transparent 72%, ' +
+                 'rgba(0,255,136,0.5) 72%, rgba(0,255,136,0.5) 86%, transparent 86%)'
+    }));
     document.body.appendChild(root);
 
     root.addEventListener('mouseenter', function () { root.style.borderColor = 'rgba(0,255,136,0.4)'; });

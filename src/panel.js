@@ -165,11 +165,11 @@
     color: '#00ff88', cursor: 'auto' });
   panel.className = 'hp-panel';
 
-  var gear = el('div', { position: 'fixed', right: '16px', bottom: '14px', zIndex: '40',
-    width: '26px', height: '26px', opacity: '0.15', cursor: 'pointer', transition: 'opacity 0.2s', lineHeight: '0' });
-  gear.innerHTML = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#00ff88" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
-  gear.addEventListener('mouseenter', function () { gear.style.opacity = '0.6'; });
-  gear.addEventListener('mouseleave', function () { gear.style.opacity = '0.15'; });
+  var gear = el('div', { position: 'fixed', right: '18px', bottom: '16px', zIndex: '40',
+    width: '30px', height: '30px', opacity: '0.45', cursor: 'pointer', transition: 'opacity 0.2s', lineHeight: '0' });
+  gear.innerHTML = '<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#00ff88" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
+  gear.addEventListener('mouseenter', function () { gear.style.opacity = '0.95'; });
+  gear.addEventListener('mouseleave', function () { gear.style.opacity = '0.45'; });
   gear.addEventListener('click', toggle);
 
   var sourcesBox = el('div', {});
@@ -482,6 +482,18 @@
   }
 
   /* --- init -------------------------------------------------------------- */
+  function positionChrome() {
+    var r = (W.WallpaperLayout && W.WallpaperLayout.rect) ? W.WallpaperLayout.rect()
+            : { x: 0, y: 0, w: window.innerWidth, h: window.innerHeight };
+    var rightGap = window.innerWidth - (r.x + r.w);
+    var bottomGap = window.innerHeight - (r.y + r.h);
+    gear.style.right = (rightGap + 18) + 'px';
+    gear.style.bottom = (bottomGap + 16) + 'px';
+    panel.style.top = r.y + 'px';
+    panel.style.height = r.h + 'px';
+    panel.style.right = rightGap + 'px';
+  }
+
   function init() {
     injectStyles();
     try {
@@ -495,6 +507,8 @@
     buildPanel();
     document.body.appendChild(panel);
     document.body.appendChild(gear);
+    positionChrome();
+    window.addEventListener('resize', positionChrome);
     bindKeys();
 
     sync();

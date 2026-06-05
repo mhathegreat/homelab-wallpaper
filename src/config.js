@@ -70,5 +70,13 @@ window.CONFIG = {
   ],
 
   /* ---- UI ----------------------------------------------------------------*/
-  showClock: true
+  showClock: true,
+
+  /* ---- Multi-monitor ----------------------------------------------------- *
+   * When Wallpaper Engine stretches ONE wallpaper across several screens, the
+   * page becomes one giant canvas, so corner-anchored UI lands on the outer
+   * screens. Set uiRect to pin the dashboard (clock, cards, gear, panel) to a
+   * single screen, as FRACTIONS of the whole canvas (0–1).
+   * null = use the whole canvas (normal single screen).                       */
+  layout: { uiRect: null }
 };
