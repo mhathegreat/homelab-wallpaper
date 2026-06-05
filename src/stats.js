@@ -131,7 +131,7 @@
       })
       .then(function (json) {
         var data;
-        try { data = normalizeGlances(json); }
+        try { data = (src.type === 'raw') ? json : normalizeGlances(json); }
         catch (e) { data = mock(); }
         dispatch(id, data);
       })

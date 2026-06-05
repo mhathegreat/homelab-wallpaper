@@ -12,3 +12,6 @@ desktop.ini
 # build / packaging output
 /dist/
 *.zip
+
+# personal/local config — never commit secrets or internal IPs
+src/config.local.js

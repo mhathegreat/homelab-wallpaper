@@ -160,9 +160,12 @@
       'Content-Type': 'application/json', 'OCS-APIRequest': 'true' };
   }
   function bodyNotes(body, cfg) {
+    // remote = agent proxy (cfg.proxy) OR direct Nextcloud (cfg.nc). Proxy keeps
+    // credentials server-side and avoids browser CORS. Local autosave always runs.
+    var hasRemote = !!(cfg.proxy || ncConfigured(cfg.nc));
     var status = el('div', { fontSize: '8px', letterSpacing: '0.1em',
       color: 'rgba(0,255,136,0.3)', marginBottom: '4px', textTransform: 'uppercase' },
-      { textContent: ncConfigured(cfg.nc) ? 'nextcloud' : 'local' });
+      { textContent: hasRemote ? 'nextcloud' : 'local' });
     var ta = el('textarea', {
       width: '100%', minHeight: '90px', resize: 'none', border: 'none', outline: 'none',
       background: 'rgba(0,0,0,0.25)', color: 'rgba(0,255,136,0.85)',
@@ -176,41 +179,55 @@
     var saveT = null, pushT = null;
     function setStatus(t) { status.textContent = t; }
 
+    function remoteGet() {
+      var url = cfg.proxy || ncUrl(cfg.nc);
+      var opt = cfg.proxy ? { signal: timeoutSignal(5000), cache: 'no-store' }
+                          : { headers: ncHeaders(cfg.nc), signal: timeoutSignal(4000) };
+      return fetch(url, opt).then(function (r) {
+        if (!r.ok) { throw new Error(r.status); } return r.json();
+      });
+    }
+    function remotePut(content) {
+      if (cfg.proxy) {
+        return fetch(cfg.proxy, { method: 'PUT', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: content }), signal: timeoutSignal(5000) });
+      }
+      return fetch(ncUrl(cfg.nc), { method: 'PUT', headers: ncHeaders(cfg.nc),
+        body: JSON.stringify({ content: content }), signal: timeoutSignal(4000) });
+    }
+
+    function ncPull() {
+      setStatus('syncing…');
+      remoteGet().then(function (j) {
+        if (j && j._status) { setStatus('local · nc pending'); return; }   // not configured yet
+        if (j && typeof j.content === 'string' && document.activeElement !== ta &&
+            (j.content !== '' || ta.value === '')) {
+          ta.value = j.content; saveNote(cfg.id, j.content);
+        }
+        setStatus('nextcloud ✓');
+      }).catch(function () { setStatus('nextcloud offline'); });
+    }
+    function ncPush() {
+      setStatus('saving…');
+      remotePut(ta.value)
+        .then(function (r) { return r.json().catch(function () { return {}; }); })
+        .then(function (j) { setStatus(j && j._status ? 'local · nc pending' : 'nextcloud ✓'); })
+        .catch(function () { setStatus('nextcloud offline'); });
+    }
+
     ta.addEventListener('input', function () {
       if (saveT) { clearTimeout(saveT); }
       saveT = setTimeout(function () { saveNote(cfg.id, ta.value); }, 300);
-      if (ncConfigured(cfg.nc)) {
+      if (hasRemote) {
         if (pushT) { clearTimeout(pushT); }
         setStatus('editing…');
-        pushT = setTimeout(function () { ncPush(); }, 1200);
+        pushT = setTimeout(ncPush, 1200);
       }
     });
-    // stop drag/keys from leaking out of the textarea
     ta.addEventListener('mousedown', function (e) { e.stopPropagation(); });
     ta.addEventListener('keydown', function (e) { e.stopPropagation(); });
 
-    function ncPull() {
-      if (!ncConfigured(cfg.nc)) { return; }
-      setStatus('syncing…');
-      fetch(ncUrl(cfg.nc), { headers: ncHeaders(cfg.nc), signal: timeoutSignal(4000) })
-        .then(function (r) { if (!r.ok) { throw new Error(r.status); } return r.json(); })
-        .then(function (n) {
-          if (n && typeof n.content === 'string' && document.activeElement !== ta) {
-            ta.value = n.content; saveNote(cfg.id, n.content);
-          }
-          setStatus('nextcloud ✓');
-        })
-        .catch(function () { setStatus('nextcloud offline'); });
-    }
-    function ncPush() {
-      if (!ncConfigured(cfg.nc)) { return; }
-      setStatus('saving…');
-      fetch(ncUrl(cfg.nc), { method: 'PUT', headers: ncHeaders(cfg.nc),
-        body: JSON.stringify({ content: ta.value }), signal: timeoutSignal(4000) })
-        .then(function (r) { setStatus(r.ok ? 'nextcloud ✓' : 'sync failed'); })
-        .catch(function () { setStatus('nextcloud offline'); });
-    }
-    if (ncConfigured(cfg.nc)) { ncPull(); }
+    if (hasRemote) { ncPull(); }
 
     return function () {};   // notes ignore stats updates
   }

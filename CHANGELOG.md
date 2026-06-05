@@ -24,5 +24,10 @@ All notable changes to this project are documented here. The format loosely foll
 - Wallpaper Engine property bridge (scheme color / FPS) and `install.ps1` installer
   that auto-detects the Steam / Wallpaper Engine content folder.
 - Documentation: README (with architecture), `CONTRIBUTING.md`, MIT `LICENSE`.
+- `source.type: 'raw'` for endpoints that already return the flat stats shape
+  (e.g. a custom agent) — skips Glances normalization.
+- Notes card `proxy` mode: read/write the note through a server-side endpoint, so
+  credentials stay off the client and browser CORS is avoided.
+- Optional, gitignored `src/config.local.js` for per-machine overrides.
 
 [Unreleased]: https://github.com/mhathegreat/homelab-wallpaper
