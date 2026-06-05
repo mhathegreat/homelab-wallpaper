@@ -25,4 +25,4 @@ All notable changes to this project are documented here. The format loosely foll
   that auto-detects the Steam / Wallpaper Engine content folder.
 - Documentation: README (with architecture), `CONTRIBUTING.md`, MIT `LICENSE`.
 
-[Unreleased]: https://github.com/<you>/homelab-wallpaper
+[Unreleased]: https://github.com/mhathegreat/homelab-wallpaper

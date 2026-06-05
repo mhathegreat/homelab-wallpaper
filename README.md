@@ -67,7 +67,7 @@ Works out of the box on built-in **mock data** — point it at [Glances](https:/
 ## Quick Install
 
 ```powershell
-git clone https://github.com/<you>/homelab-wallpaper.git
+git clone https://github.com/mhathegreat/homelab-wallpaper.git
 cd homelab-wallpaper
 # Right-click install.ps1  ->  "Run with PowerShell"
 ```
