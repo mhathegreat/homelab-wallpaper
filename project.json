@@ -22,13 +22,13 @@
       "thispcurl":     { "order": 41, "text": "This PC stats URL",  "type": "textinput", "value": "" },
       "pollinterval":  { "order": 42, "text": "Poll interval (sec)","type": "slider", "value": 5, "min": 2, "max": 30, "step": 1 },
 
-      "card_sys_home": { "order": 50, "text": "Card: System · Homelab",   "type": "bool", "value": true },
-      "card_net_home": { "order": 51, "text": "Card: Network · Homelab",  "type": "bool", "value": true },
-      "card_svc_home": { "order": 52, "text": "Card: Services · Homelab", "type": "bool", "value": true },
-      "card_sto_home": { "order": 53, "text": "Card: Storage · Homelab",  "type": "bool", "value": true },
-      "card_sys_pc":   { "order": 54, "text": "Card: System · This PC",   "type": "bool", "value": false },
-      "card_net_pc":   { "order": 55, "text": "Card: Network · This PC",  "type": "bool", "value": false },
-      "card_sto_pc":   { "order": 56, "text": "Card: Storage · This PC",  "type": "bool", "value": false },
+      "card_sys_home": { "order": 50, "text": "Card: System -Homelab",   "type": "bool", "value": true },
+      "card_net_home": { "order": 51, "text": "Card: Network -Homelab",  "type": "bool", "value": true },
+      "card_svc_home": { "order": 52, "text": "Card: Services -Homelab", "type": "bool", "value": true },
+      "card_sto_home": { "order": 53, "text": "Card: Storage -Homelab",  "type": "bool", "value": true },
+      "card_sys_pc":   { "order": 54, "text": "Card: System -This PC",   "type": "bool", "value": false },
+      "card_net_pc":   { "order": 55, "text": "Card: Network -This PC",  "type": "bool", "value": false },
+      "card_sto_pc":   { "order": 56, "text": "Card: Storage -This PC",  "type": "bool", "value": false },
       "card_notes1":   { "order": 57, "text": "Card: Notes",              "type": "bool", "value": true },
       "card_links1":   { "order": 58, "text": "Card: Links",              "type": "bool", "value": false }
     }

@@ -513,6 +513,7 @@
     positionChrome();
     window.addEventListener('resize', positionChrome);
     bindKeys();
+    if (W.CONFIG && W.CONFIG.showGear === false) { gear.style.display = 'none'; panel.style.display = 'none'; }
 
     sync();
     applyDisplayState();
@@ -522,7 +523,11 @@
     if (W.WallpaperStats) { W.WallpaperStats.start(); }
 
     W.WallpaperPanel = { open: open, close: close, toggle: toggle, sync: sync, persist: persist,
-      setGearVisible: function (v) { gear.style.display = v ? 'block' : 'none'; } };
+      setGearVisible: function (v) {
+        gear.style.display = v ? '' : 'none';
+        if (v) { panel.style.display = ''; }
+        else { close(); panel.style.display = 'none'; }   // fully hide the in-page config
+      } };
   }
 
   init();
