@@ -71,6 +71,7 @@ window.CONFIG = {
 
   /* ---- UI ----------------------------------------------------------------*/
   showClock: true,
+  clockPosition: 'right',        // clock alignment on its screen: 'left' | 'center' | 'right'
 
   /* ---- Multi-monitor ----------------------------------------------------- *
    * When Wallpaper Engine stretches ONE wallpaper across several screens, the

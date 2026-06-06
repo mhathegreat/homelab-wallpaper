@@ -105,11 +105,14 @@
         var r = (window.WallpaperLayout && window.WallpaperLayout.rect)
           ? window.WallpaperLayout.rect()
           : { x: 0, y: 0, w: window.innerWidth, h: window.innerHeight };
+        var pos = (window.CONFIG && window.CONFIG.clockPosition) || 'right';
         clock.style.left = r.x + 'px';
-        clock.style.top = (r.y + 18) + 'px';
+        clock.style.top = (r.y + 24) + 'px';
         clock.style.width = r.w + 'px';
         clock.style.right = 'auto';
-        clock.style.paddingRight = '26px';
+        clock.style.textAlign = pos;
+        clock.style.paddingLeft = pos === 'left' ? '26px' : '0';
+        clock.style.paddingRight = pos === 'right' ? '26px' : '0';
       }
       placeClock();
       window.addEventListener('resize', placeClock);
