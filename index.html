@@ -102,15 +102,13 @@
 
       // pin the clock to the configured screen (multi-monitor stretch)
       function placeClock() {
-        var r = (window.WallpaperLayout && window.WallpaperLayout.rect)
-          ? window.WallpaperLayout.rect()
-          : { x: 0, y: 0, w: window.innerWidth, h: window.innerHeight };
+        var u = window.CONFIG && window.CONFIG.layout && window.CONFIG.layout.uiRect;
         var pos = (window.CONFIG && window.CONFIG.clockPosition) || 'right';
-        clock.style.left = r.x + 'px';
-        clock.style.top = (r.y + 24) + 'px';
-        clock.style.width = r.w + 'px';
         clock.style.right = 'auto';
-        clock.style.textAlign = pos;
+        clock.style.left = u ? (u.x * 100 + '%') : '0';
+        clock.style.width = u ? (u.w * 100 + '%') : '100%';
+        clock.style.top = u ? ('calc(' + (u.y * 100) + '% + 24px)') : '20px';
+        clock.style.textAlign = pos;            // 'left' | 'center' | 'right'
         clock.style.paddingLeft = pos === 'left' ? '26px' : '0';
         clock.style.paddingRight = pos === 'right' ? '26px' : '0';
       }

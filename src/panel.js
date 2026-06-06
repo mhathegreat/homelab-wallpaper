@@ -483,15 +483,18 @@
 
   /* --- init -------------------------------------------------------------- */
   function positionChrome() {
-    var r = (W.WallpaperLayout && W.WallpaperLayout.rect) ? W.WallpaperLayout.rect()
-            : { x: 0, y: 0, w: window.innerWidth, h: window.innerHeight };
-    var rightGap = window.innerWidth - (r.x + r.w);
-    var bottomGap = window.innerHeight - (r.y + r.h);
-    gear.style.right = (rightGap + 18) + 'px';
-    gear.style.bottom = (bottomGap + 16) + 'px';
-    panel.style.top = r.y + 'px';
-    panel.style.height = r.h + 'px';
-    panel.style.right = rightGap + 'px';
+    var u = W.CONFIG && W.CONFIG.layout && W.CONFIG.layout.uiRect;
+    if (!u) {
+      gear.style.right = '18px'; gear.style.bottom = '16px';
+      panel.style.top = '0'; panel.style.height = '100vh'; panel.style.right = '0';
+      return;
+    }
+    var rg = (1 - (u.x + u.w)) * 100, bg = (1 - (u.y + u.h)) * 100;
+    gear.style.right = 'calc(' + rg + '% + 18px)';
+    gear.style.bottom = 'calc(' + bg + '% + 16px)';
+    panel.style.top = (u.y * 100) + '%';
+    panel.style.height = (u.h * 100) + '%';
+    panel.style.right = rg + '%';
   }
 
   function init() {
