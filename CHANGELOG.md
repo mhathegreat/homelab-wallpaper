@@ -34,5 +34,9 @@ All notable changes to this project are documented here. The format loosely foll
 - Wallpaper Engine usability: bigger/brighter clock, a more visible gear (WE blocks
   keyboard input to wallpapers, so the panel opens by clicking the gear), higher card
   max-width, and a visible resize grip.
+- **Wallpaper Engine Properties** support (`project.json` + `src/we.js`): configure
+  colours, node look, cursor physics, clock, gear, source URLs, poll interval, and
+  per-card visibility from WE's native sidebar — no keyboard, no clicking the wallpaper.
+- Configurable clock alignment (`clockPosition: left | center | right`).
 
 [Unreleased]: https://github.com/mhathegreat/homelab-wallpaper

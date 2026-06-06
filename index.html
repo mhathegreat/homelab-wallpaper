@@ -91,6 +91,7 @@
   <script src="src/cards.js"></script>
   <script src="src/particles.js"></script>
   <script src="src/panel.js"></script>
+  <script src="src/we.js"></script>
 
   <!-- clock + hint (tied to elements in this file) -->
   <script>
@@ -114,6 +115,7 @@
       }
       placeClock();
       window.addEventListener('resize', placeClock);
+      window.WallpaperClock = { place: placeClock };   // let WE Properties re-place it
 
       var DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
       var MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',

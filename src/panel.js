@@ -521,7 +521,8 @@
     if (W.WallpaperCards) { W.WallpaperCards.render(); }
     if (W.WallpaperStats) { W.WallpaperStats.start(); }
 
-    W.WallpaperPanel = { open: open, close: close, toggle: toggle, sync: sync, persist: persist };
+    W.WallpaperPanel = { open: open, close: close, toggle: toggle, sync: sync, persist: persist,
+      setGearVisible: function (v) { gear.style.display = v ? 'block' : 'none'; } };
   }
 
   init();

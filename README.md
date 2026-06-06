@@ -155,10 +155,16 @@ at `http://localhost:61208/api/3/all`, then enable the `THIS PC` cards in
 
 ## Configuration
 
-Two ways to configure:
+Three ways to configure:
 
-1. **Live** — press <kbd>C</kbd> for the panel + **card builder** (recommended).
-2. **Defaults** — edit [`src/config.js`](src/config.js); every option is commented.
+1. **Wallpaper Engine Properties** — WE's native sidebar (colours, node look, clock,
+   which cards show, source URLs, poll rate). This is how you configure it **on the
+   desktop**, because WE blocks keyboard input to wallpapers. Defined in
+   [`project.json`](project.json), applied by [`src/we.js`](src/we.js).
+2. **Browser panel** — press <kbd>C</kbd> in a browser preview for the live panel +
+   **card builder** (add / remove / reorder cards). Keyboard-dependent, so it's for the
+   preview, not the WE desktop.
+3. **Defaults** — edit [`src/config.js`](src/config.js); every option is commented.
 
 Anything you change in the panel autosaves to `localStorage` and overrides
 `config.js` on the next load. The panel's **Reset to defaults** button clears that

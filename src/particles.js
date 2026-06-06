@@ -184,38 +184,7 @@
     } catch (e) {}
   });
 
-  /* --- Wallpaper Engine property bridge ---------------------------------- *
-   * Wires the project.json "schemecolor" picker (and WE's fps setting) into
-   * the live config so the WE Properties panel works too.                    */
-  function weColorToHex(s) {
-    var p = String(s).split(' ').map(Number);
-    if (p.length < 3 || p.some(isNaN)) { return null; }
-    function to(x) {
-      return ('0' + Math.round(Math.max(0, Math.min(1, x)) * 255)
-        .toString(16)).slice(-2);
-    }
-    return '#' + to(p[0]) + to(p[1]) + to(p[2]);
-  }
-
-  W.wallpaperPropertyListener = {
-    applyUserProperties: function (props) {
-      if (props && props.schemecolor && props.schemecolor.value) {
-        var hex = weColorToHex(props.schemecolor.value);
-        if (hex && W.CONFIG) {
-          W.CONFIG.color = hex;
-          refresh();
-          if (W.WallpaperPanel && W.WallpaperPanel.sync) { W.WallpaperPanel.sync(); }
-        }
-      }
-    },
-    applyGeneralProperties: function (props) {
-      if (props && typeof props.fps === 'number' && W.CONFIG) {
-        W.CONFIG.fpsCap = props.fps;
-        refresh();
-        if (W.WallpaperPanel && W.WallpaperPanel.sync) { W.WallpaperPanel.sync(); }
-      }
-    }
-  };
+  /* Wallpaper Engine Properties are handled by src/we.js (one bridge). */
 
   refresh();
 })();

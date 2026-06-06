@@ -2,12 +2,35 @@
   "file": "index.html",
   "general": {
     "properties": {
-      "schemecolor": {
-        "order": 0,
-        "text": "Scheme Color",
-        "type": "color",
-        "value": "0 0.8 0.4"
-      }
+      "color":         { "order": 10, "text": "Node & line color", "type": "color",  "value": "0 1 0.533333" },
+      "bgcolor":       { "order": 11, "text": "Background color",   "type": "color",  "value": "0 0 0" },
+      "speed":         { "order": 12, "text": "Drift speed",        "type": "slider", "value": 0.3, "min": 0.1, "max": 2.0, "step": 0.1, "fraction": true },
+      "nodecount":     { "order": 13, "text": "Node count",         "type": "slider", "value": 100, "min": 20, "max": 150, "step": 5 },
+      "maxdistance":   { "order": 14, "text": "Connection distance","type": "slider", "value": 170, "min": 80, "max": 250, "step": 10 },
+      "lineopacity":   { "order": 15, "text": "Line opacity",       "type": "slider", "value": 30, "min": 1, "max": 40, "step": 1 },
+      "nodesize":      { "order": 16, "text": "Node size",          "type": "slider", "value": 2, "min": 1, "max": 4, "step": 0.5, "fraction": true },
+      "fpscap":        { "order": 17, "text": "FPS cap",            "type": "slider", "value": 60, "min": 10, "max": 60, "step": 5 },
+      "mouserepel":    { "order": 18, "text": "Cursor repel",       "type": "bool",   "value": true },
+      "repeldistance": { "order": 19, "text": "Cursor reach",       "type": "slider", "value": 50, "min": 20, "max": 200, "step": 5, "condition": "mouserepel.value == true" },
+      "repelstrength": { "order": 20, "text": "Push strength",      "type": "slider", "value": 120, "min": 20, "max": 200, "step": 5, "condition": "mouserepel.value == true" },
+
+      "showclock":     { "order": 30, "text": "Show clock",         "type": "bool",   "value": true },
+      "clockpos":      { "order": 31, "text": "Clock position",     "type": "combo",  "value": "right", "options": [ { "label": "Right", "value": "right" }, { "label": "Center", "value": "center" }, { "label": "Left", "value": "left" } ] },
+      "showgear":      { "order": 32, "text": "Show in-wallpaper gear", "type": "bool", "value": true },
+
+      "homelaburl":    { "order": 40, "text": "Homelab stats URL",  "type": "textinput", "value": "" },
+      "thispcurl":     { "order": 41, "text": "This PC stats URL",  "type": "textinput", "value": "" },
+      "pollinterval":  { "order": 42, "text": "Poll interval (sec)","type": "slider", "value": 5, "min": 2, "max": 30, "step": 1 },
+
+      "card_sys_home": { "order": 50, "text": "Card: System · Homelab",   "type": "bool", "value": true },
+      "card_net_home": { "order": 51, "text": "Card: Network · Homelab",  "type": "bool", "value": true },
+      "card_svc_home": { "order": 52, "text": "Card: Services · Homelab", "type": "bool", "value": true },
+      "card_sto_home": { "order": 53, "text": "Card: Storage · Homelab",  "type": "bool", "value": true },
+      "card_sys_pc":   { "order": 54, "text": "Card: System · This PC",   "type": "bool", "value": false },
+      "card_net_pc":   { "order": 55, "text": "Card: Network · This PC",  "type": "bool", "value": false },
+      "card_sto_pc":   { "order": 56, "text": "Card: Storage · This PC",  "type": "bool", "value": false },
+      "card_notes1":   { "order": 57, "text": "Card: Notes",              "type": "bool", "value": true },
+      "card_links1":   { "order": 58, "text": "Card: Links",              "type": "bool", "value": false }
     }
   },
   "preview": "preview.png",
